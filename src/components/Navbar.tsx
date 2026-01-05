@@ -1,19 +1,26 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/contexts/CartContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { itemCount } = useCart();
+  const { user, signOut } = useAuth();
 
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Features', href: '/#features' },
     { name: 'Specs', href: '/#specs' },
   ];
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsOpen(false);
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
@@ -42,12 +49,24 @@ const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/auth">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <User className="w-4 h-4" />
-                Sign In
-              </Button>
-            </Link>
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-muted-foreground">
+                  {user.email?.split('@')[0]}
+                </span>
+                <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2">
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <User className="w-4 h-4" />
+                  Sign In
+                </Button>
+              </Link>
+            )}
             <Link to="/cart" className="relative">
               <Button variant="outline" size="sm" className="gap-2">
                 <ShoppingCart className="w-4 h-4" />
@@ -92,12 +111,19 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="flex gap-4 pt-4 border-t border-border">
-                <Link to="/auth" onClick={() => setIsOpen(false)}>
-                  <Button variant="ghost" size="sm" className="gap-2">
-                    <User className="w-4 h-4" />
-                    Sign In
+                {user ? (
+                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2">
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
                   </Button>
-                </Link>
+                ) : (
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      <User className="w-4 h-4" />
+                      Sign In
+                    </Button>
+                  </Link>
+                )}
                 <Link to="/cart" onClick={() => setIsOpen(false)}>
                   <Button variant="outline" size="sm" className="gap-2 relative">
                     <ShoppingCart className="w-4 h-4" />
