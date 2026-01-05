@@ -1,30 +1,156 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Mail, Lock, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ArrowLeft, Mail, Lock, User, CheckCircle } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const { toast } = useToast();
+  const { user, signUp, signIn } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
+  const validateForm = () => {
+    if (!email || !email.includes('@')) {
+      toast({
+        title: 'Invalid Email',
+        description: 'Please enter a valid email address.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+    if (password.length < 6) {
+      toast({
+        title: 'Weak Password',
+        description: 'Password must be at least 6 characters.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+    if (isSignUp && !name.trim()) {
+      toast({
+        title: 'Name Required',
+        description: 'Please enter your full name.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // For now, just show a message about needing backend
-    toast({
-      title: isSignUp ? 'Sign Up' : 'Sign In',
-      description: 'To enable user authentication, please connect Lovable Cloud backend.',
-    });
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+
+    if (isSignUp) {
+      const { error, needsVerification } = await signUp(email, password, name);
+      
+      if (error) {
+        let message = error.message;
+        if (error.message.includes('already registered')) {
+          message = 'This email is already registered. Please sign in instead.';
+        }
+        toast({
+          title: 'Sign Up Failed',
+          description: message,
+          variant: 'destructive',
+        });
+      } else if (needsVerification) {
+        setShowVerificationMessage(true);
+        toast({
+          title: 'Check Your Email!',
+          description: 'We sent you a verification link. Please check your inbox.',
+        });
+      } else {
+        toast({
+          title: 'Account Created!',
+          description: 'Welcome! You are now signed in.',
+        });
+        navigate('/');
+      }
+    } else {
+      const { error } = await signIn(email, password);
+      
+      if (error) {
+        toast({
+          title: 'Sign In Failed',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Welcome Back!',
+          description: 'You are now signed in.',
+        });
+        navigate('/');
+      }
+    }
+
+    setIsLoading(false);
   };
+
+  if (showVerificationMessage) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Navbar />
+        
+        <main className="flex-1 pt-24 pb-16 flex items-center justify-center">
+          <div className="container mx-auto px-4 max-w-md">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="glass-card p-8 text-center"
+            >
+              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-8 h-8 text-primary" />
+              </div>
+              <h1 className="font-display text-2xl font-bold mb-2">Check Your Email</h1>
+              <p className="text-muted-foreground mb-6">
+                We've sent a verification link to <strong>{email}</strong>. 
+                Click the link in the email to verify your account.
+              </p>
+              <p className="text-sm text-muted-foreground mb-6">
+                Didn't receive the email? Check your spam folder or try signing up again.
+              </p>
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setShowVerificationMessage(false);
+                  setIsSignUp(false);
+                }}
+                className="w-full"
+              >
+                Back to Sign In
+              </Button>
+            </motion.div>
+          </div>
+        </main>
+
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -93,6 +219,7 @@ const Auth = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="pl-10"
+                            disabled={isLoading}
                             required
                           />
                         </div>
@@ -110,6 +237,7 @@ const Auth = () => {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           className="pl-10"
+                          disabled={isLoading}
                           required
                         />
                       </div>
@@ -126,14 +254,15 @@ const Auth = () => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           className="pl-10"
+                          disabled={isLoading}
                           required
                           minLength={6}
                         />
                       </div>
                     </div>
 
-                    <Button type="submit" className="w-full" size="lg">
-                      {isSignUp ? 'Create Account' : 'Sign In'}
+                    <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+                      {isLoading ? 'Please wait...' : (isSignUp ? 'Create Account' : 'Sign In')}
                     </Button>
                   </form>
                 </motion.div>
