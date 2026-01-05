@@ -23,9 +23,9 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[400px] md:h-[600px] lg:h-[800px] bg-primary/5 rounded-full blur-3xl" />
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <motion.div
@@ -48,7 +48,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
             >
               The Future of
               <span className="gradient-text block">Macro Control</span>
@@ -58,7 +58,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0"
+              className="text-base sm:text-lg text-muted-foreground mb-8 max-w-lg mx-auto lg:mx-0"
             >
               A premium macro pad featuring a built-in LCD display, programmable keys, 
               and endless customization. Designed for creators, developers, and power users.
@@ -99,7 +99,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex gap-8 mt-12 justify-center lg:justify-start"
+              className="flex gap-6 sm:gap-8 mt-12 justify-center lg:justify-start"
             >
               {[
                 { icon: Monitor, label: 'LCD Display', value: '2.4"' },
@@ -122,7 +122,7 @@ const Hero = () => {
             transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
             className="relative"
           >
-            <div className="relative aspect-square max-w-lg mx-auto">
+            <div className="relative aspect-square max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
               {/* Glow Effect */}
               <div className="absolute inset-0 bg-primary/20 rounded-3xl blur-3xl animate-pulse-glow" />
               
