@@ -18,9 +18,9 @@ const Specs = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="specs" className="py-24 relative">
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section id="specs" className="py-16 sm:py-24 relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Image */}
           <motion.div
             ref={ref}
@@ -29,7 +29,7 @@ const Specs = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="aspect-square max-w-md mx-auto relative">
+            <div className="aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto relative">
               <div className="absolute inset-0 bg-primary/10 rounded-3xl blur-3xl" />
               <div className="relative glass-card p-8 h-full flex items-center justify-center">
                 <img
@@ -48,7 +48,7 @@ const Specs = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="text-primary text-sm font-medium mb-4 block">Specifications</span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-8">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8">
               Built to Perform
             </h2>
 

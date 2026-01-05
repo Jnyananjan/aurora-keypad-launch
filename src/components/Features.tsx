@@ -61,10 +61,10 @@ const Features = () => {
   const isHeaderInView = useInView(headerRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="features" className="py-24 relative">
+    <section id="features" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           ref={headerRef}
           initial={{ opacity: 0, y: 30 }}
@@ -73,7 +73,7 @@ const Features = () => {
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-medium mb-4 block">Features</span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Designed for Power Users
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
