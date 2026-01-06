@@ -1,8 +1,9 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import Features from '@/components/Features';
+import BuilderSection from '@/components/BuilderSection';
+import ProductShowcase from '@/components/ProductShowcase';
+import MadeForEverything from '@/components/MadeForEverything';
 import Specs from '@/components/Specs';
-import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -10,9 +11,10 @@ const Index = () => {
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Navbar />
       <Hero />
-      <Features />
+      <BuilderSection />
+      <ProductShowcase />
+      <MadeForEverything />
       <Specs />
-      <CTA />
       <Footer />
     </div>
   );
