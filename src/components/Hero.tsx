@@ -84,20 +84,18 @@ const Hero = () => {
               <Link to="/cart">
                 <Button 
                   size="lg" 
-                  className="gap-2 text-base px-10 bg-foreground text-background hover:bg-foreground/90 font-semibold"
+                  className="text-base px-10 bg-foreground text-background hover:bg-foreground/90 font-semibold"
                 >
                   View Cart
-                  <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
             ) : (
               <Button 
                 size="lg" 
-                className="gap-2 text-base px-10 bg-foreground text-background hover:bg-foreground/90 font-semibold"
+                className="text-base px-10 bg-foreground text-background hover:bg-foreground/90 font-semibold"
                 onClick={handlePreOrder}
               >
                 Pre-Order Now — $149
-                <ArrowRight className="w-5 h-5" />
               </Button>
             )}
             <a href="#features">

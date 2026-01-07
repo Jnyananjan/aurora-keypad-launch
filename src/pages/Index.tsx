@@ -3,6 +3,7 @@ import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import Compatibility from '@/components/Compatibility';
 import Specs from '@/components/Specs';
+import DeviceDescription from '@/components/DeviceDescription';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 
@@ -14,6 +15,7 @@ const Index = () => {
       <Features />
       <Compatibility />
       <Specs />
+      <DeviceDescription />
       <CTA />
       <Footer />
     </div>

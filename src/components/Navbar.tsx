@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X, LogOut } from 'lucide-react';
+import { ShoppingCart, Menu, X, LogOut, Home, User } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/contexts/CartContext';
@@ -12,9 +12,9 @@ const Navbar = () => {
   const { user, signOut } = useAuth();
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Features', href: '#features' },
-    { name: 'Specs', href: '#specs' },
+    { name: 'Home', href: '/', icon: Home },
+    { name: 'Setup', href: '/setup' },
+    { name: 'Updates', href: '/updates' },
   ];
 
   const handleSignOut = async () => {
@@ -32,17 +32,30 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Left side - Nav links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 onClick={link.name === 'Home' ? handleHomeClick : undefined}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
+            {user ? (
+              <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2 text-muted-foreground hover:text-foreground">
+                <LogOut className="w-4 h-4" />
+                Sign Out
+              </Button>
+            ) : (
+              <Link to="/auth" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Sign In
+              </Link>
+            )}
+            <Link to="/cart" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Cart
+            </Link>
           </div>
 
           {/* Center - Product Name (no logo) */}
@@ -54,40 +67,20 @@ const Navbar = () => {
             Macro Pad
           </Link>
 
-          {/* Right side - Actions */}
+          {/* Right side - Cart icon and Pre-Order */}
           <div className="hidden md:flex items-center gap-4 ml-auto">
-            {user ? (
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-muted-foreground">
-                  {user.email?.split('@')[0]}
-                </span>
-                <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2">
-                  <LogOut className="w-4 h-4" />
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <Link to="/auth">
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <User className="w-4 h-4" />
-                  Sign In
-                </Button>
-              </Link>
-            )}
             <Link to="/cart" className="relative">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <ShoppingCart className="w-4 h-4" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-xs rounded-full flex items-center justify-center">
-                    {itemCount}
-                  </span>
-                )}
-              </Button>
+              <ShoppingCart className="w-5 h-5 text-foreground" />
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 w-4 h-4 bg-foreground text-background text-xs rounded-full flex items-center justify-center">
+                  {itemCount}
+                </span>
+              )}
             </Link>
             <Button 
               size="sm" 
               className="bg-foreground text-background hover:bg-foreground/90 font-semibold px-6"
-              onClick={() => window.location.href = '#hero'}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
               Pre-Order
             </Button>
@@ -114,9 +107,9 @@ const Navbar = () => {
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   className="text-muted-foreground hover:text-foreground transition-colors py-2"
                   onClick={(e) => {
                     if (link.name === 'Home') {
@@ -126,7 +119,7 @@ const Navbar = () => {
                   }}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
                 {user ? (
