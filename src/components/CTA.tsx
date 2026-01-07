@@ -4,7 +4,6 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 import { Link } from 'react-router-dom';
-import macropadSide from '@/assets/macropad-side.png';
 import macropadHero from '@/assets/macropad-hero.png';
 
 const CTA = () => {
@@ -24,70 +23,80 @@ const CTA = () => {
   };
 
   return (
-    <section className="py-20 sm:py-28">
-      {/* Side profile image */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="container mx-auto px-4 mb-20"
-      >
-        <div className="relative max-w-2xl mx-auto">
-          <div className="absolute inset-0 bg-foreground/5 rounded-full blur-[80px] scale-75" />
-          <img
-            src={macropadSide}
-            alt="Macro Pad Side Profile"
-            className="relative w-full h-auto object-contain"
-          />
-        </div>
-      </motion.div>
+    <section className="py-24 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-background" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[400px] md:h-[600px] bg-primary/10 rounded-full blur-3xl" />
 
-      {/* CTA Card */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto"
+          transition={{ duration: 0.8 }}
+          className="glass-card p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto"
         >
-          <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-block text-primary text-sm font-medium mb-4"
+          >
             Limited Pre-Order
-          </span>
+          </motion.span>
 
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4 glow-text">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.3 }}
+            className="font-display text-2xl sm:text-3xl md:text-5xl font-bold mb-6"
+          >
             Be Among the First
-          </h2>
+          </motion.h2>
 
-          <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.4 }}
+            className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto"
+          >
             Pre-order now and get exclusive early-bird pricing. 
-            Limited quantities available.
-          </p>
+            Limited quantities available for the first production run.
+          </motion.p>
 
-          {isInCart('macropad-pro') ? (
-            <Link to="/cart">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.5 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            {isInCart('macropad-pro') ? (
+              <Link to="/cart">
+                <Button size="lg" className="gap-2 text-base px-10 animate-glow-pulse">
+                  View Cart
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
+            ) : (
               <Button 
                 size="lg" 
-                className="bg-foreground text-background hover:bg-foreground/90 rounded-md px-10 py-6 text-base glow-strong"
+                className="gap-2 text-base px-10 animate-glow-pulse"
+                onClick={handlePreOrder}
               >
-                View Cart
-                <ArrowRight className="w-5 h-5 ml-2" />
+                Pre-Order — $149
+                <ArrowRight className="w-5 h-5" />
               </Button>
-            </Link>
-          ) : (
-            <Button 
-              size="lg" 
-              className="bg-foreground text-background hover:bg-foreground/90 rounded-md px-10 py-6 text-base glow-strong"
-              onClick={handlePreOrder}
-            >
-              Pre-Order — $149
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-          )}
+            )}
+          </motion.div>
 
-          <p className="text-muted-foreground text-sm mt-6">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 0.6 }}
+            className="text-muted-foreground text-sm mt-6"
+          >
             Estimated shipping: Q2 2025
-          </p>
+          </motion.p>
         </motion.div>
       </div>
     </section>

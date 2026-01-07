@@ -1,19 +1,16 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import macropadSide from '@/assets/macropad-side.png';
 
 const specs = [
-  { label: 'Display', value: '2.4" IPS LCD' },
-  { label: 'Resolution', value: '320 × 240px' },
-  { label: 'Keys', value: '12 Mechanical' },
-  { label: 'Switches', value: 'Hot-Swappable' },
-  { label: 'Processor', value: 'ESP32-S3' },
-  { label: 'Connectivity', value: 'USB-C' },
-  { label: 'Wireless', value: 'WiFi & BT 5.0' },
-  { label: 'Dimensions', value: '120 × 90 × 25mm' },
+  { label: 'Display', value: '2.4" IPS LCD, 320x240px' },
+  { label: 'Keys', value: '12 hot-swappable mechanical switches' },
+  { label: 'Processor', value: 'ARM Cortex-M4 @ 168MHz' },
+  { label: 'Connectivity', value: 'USB-C, Bluetooth 5.0' },
+  { label: 'Material', value: 'High-quality matte plastic' },
+  { label: 'Dimensions', value: '120 x 90 x 25mm' },
   { label: 'Weight', value: '180g' },
-  { label: 'Material', value: 'Matte ABS' },
-  { label: 'Compatibility', value: 'Win / Mac / Linux' },
-  { label: 'Software', value: 'Cross-Platform App' },
+  { label: 'Compatibility', value: 'Windows, macOS, Linux' },
 ];
 
 const Specs = () => {
@@ -21,41 +18,55 @@ const Specs = () => {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="specs" className="py-20 sm:py-28">
+    <section id="specs" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 sm:mb-16"
-        >
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-            Specifications
-          </h2>
-          <p className="text-muted-foreground max-w-md mx-auto">
-            Every detail engineered for performance.
-          </p>
-        </motion.div>
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+          {/* Image */}
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto relative">
+              <div className="absolute inset-0 bg-primary/10 rounded-3xl blur-3xl" />
+              <div className="relative glass-card p-8 h-full flex items-center justify-center">
+                <img
+                  src={macropadSide}
+                  alt="MacroPad Pro Side View"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+          </motion.div>
 
-        {/* Grid Layout */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-4xl mx-auto">
-          {specs.map((spec, index) => (
-            <motion.div
-              key={spec.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="border-b border-r border-border p-4 sm:p-6 last:border-r-0 [&:nth-child(2n)]:border-r-0 md:[&:nth-child(2n)]:border-r md:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(3n)]:border-r lg:[&:nth-child(4n)]:border-r-0"
-            >
-              <span className="block text-xs text-muted-foreground uppercase tracking-wider mb-1">
-                {spec.label}
-              </span>
-              <span className="font-display font-semibold text-sm sm:text-base">
-                {spec.value}
-              </span>
-            </motion.div>
-          ))}
+          {/* Specs List */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="text-primary text-sm font-medium mb-4 block">Specifications</span>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8">
+              Built to Perform
+            </h2>
+
+            <div className="space-y-4">
+              {specs.map((spec, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.05 }}
+                  className="flex justify-between items-center py-3 border-b border-border/50"
+                >
+                  <span className="text-muted-foreground">{spec.label}</span>
+                  <span className="font-medium">{spec.value}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
