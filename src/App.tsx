@@ -9,6 +9,9 @@ import Index from "./pages/Index";
 import Cart from "./pages/Cart";
 import Auth from "./pages/Auth";
 import Checkout from "./pages/Checkout";
+import Setup from "./pages/Setup";
+import Updates from "./pages/Updates";
+import UpdateDetail from "./pages/UpdateDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +29,9 @@ const App = () => (
               <Route path="/cart" element={<Cart />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/setup" element={<Setup />} />
+              <Route path="/updates" element={<Updates />} />
+              <Route path="/updates/:id" element={<UpdateDetail />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
