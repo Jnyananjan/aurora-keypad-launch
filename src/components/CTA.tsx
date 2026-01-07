@@ -23,10 +23,9 @@ const CTA = () => {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-background" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[400px] md:h-[600px] bg-primary/10 rounded-full blur-3xl" />
+    <section className="py-24 relative overflow-hidden bg-background">
+      {/* Minimal glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-foreground/5 rounded-full blur-[80px]" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
@@ -34,13 +33,13 @@ const CTA = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8 }}
-          className="glass-card p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto"
+          className="rounded-2xl border border-border/50 bg-card p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto"
         >
           <motion.span
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 0.2 }}
-            className="inline-block text-primary text-sm font-medium mb-4"
+            className="inline-block text-muted-foreground text-sm font-medium mb-4 uppercase tracking-wider"
           >
             Limited Pre-Order
           </motion.span>
@@ -72,7 +71,10 @@ const CTA = () => {
           >
             {isInCart('macropad-pro') ? (
               <Link to="/cart">
-                <Button size="lg" className="gap-2 text-base px-10 animate-glow-pulse">
+                <Button 
+                  size="lg" 
+                  className="gap-2 text-base px-10 bg-foreground text-background hover:bg-foreground/90 font-semibold"
+                >
                   View Cart
                   <ArrowRight className="w-5 h-5" />
                 </Button>
@@ -80,7 +82,7 @@ const CTA = () => {
             ) : (
               <Button 
                 size="lg" 
-                className="gap-2 text-base px-10 animate-glow-pulse"
+                className="gap-2 text-base px-10 bg-foreground text-background hover:bg-foreground/90 font-semibold"
                 onClick={handlePreOrder}
               >
                 Pre-Order — $149
