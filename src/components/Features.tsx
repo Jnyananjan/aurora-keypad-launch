@@ -45,10 +45,10 @@ const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: n
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="glass-card p-6 group hover:border-primary/50 transition-all duration-300"
+      className="p-6 rounded-2xl bg-card border border-border/50 group hover:border-foreground/20 transition-all duration-300"
     >
-      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-        <feature.icon className="w-6 h-6 text-primary" />
+      <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-4 group-hover:bg-foreground/10 transition-colors">
+        <feature.icon className="w-6 h-6 text-foreground" />
       </div>
       <h3 className="font-display text-lg font-semibold mb-2">{feature.title}</h3>
       <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
@@ -61,9 +61,7 @@ const Features = () => {
   const isHeaderInView = useInView(headerRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="features" className="py-16 sm:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
-      
+    <section id="features" className="py-16 sm:py-24 relative overflow-hidden bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           ref={headerRef}
@@ -72,7 +70,7 @@ const Features = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium mb-4 block">Features</span>
+          <span className="text-muted-foreground text-sm font-medium mb-4 block uppercase tracking-wider">Features</span>
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             Designed for Power Users
           </h2>

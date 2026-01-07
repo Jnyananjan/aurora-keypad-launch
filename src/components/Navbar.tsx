@@ -13,8 +13,8 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Features', href: '/#features' },
-    { name: 'Specs', href: '/#specs' },
+    { name: 'Features', href: '#features' },
+    { name: 'Specs', href: '#specs' },
   ];
 
   const handleSignOut = async () => {
@@ -22,24 +22,22 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/30">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="font-display font-bold text-primary-foreground text-sm">M</span>
-            </div>
-            <span className="font-display font-semibold text-lg">MacroPad</span>
-          </Link>
-
-          {/* Desktop Navigation */}
+          {/* Left side - Nav links */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
+                onClick={link.name === 'Home' ? handleHomeClick : undefined}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.name}
@@ -47,8 +45,17 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Center - Product Name (no logo) */}
+          <Link 
+            to="/" 
+            onClick={handleHomeClick}
+            className="absolute left-1/2 -translate-x-1/2 font-display font-bold text-xl tracking-tight"
+          >
+            Macro Pad
+          </Link>
+
+          {/* Right side - Actions */}
+          <div className="hidden md:flex items-center gap-4 ml-auto">
             {user ? (
               <div className="flex items-center gap-3">
                 <span className="text-sm text-muted-foreground">
@@ -68,21 +75,27 @@ const Navbar = () => {
               </Link>
             )}
             <Link to="/cart" className="relative">
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button variant="ghost" size="sm" className="gap-2">
                 <ShoppingCart className="w-4 h-4" />
-                Cart
                 {itemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-xs rounded-full flex items-center justify-center">
                     {itemCount}
                   </span>
                 )}
               </Button>
             </Link>
+            <Button 
+              size="sm" 
+              className="bg-foreground text-background hover:bg-foreground/90 font-semibold px-6"
+              onClick={() => window.location.href = '#hero'}
+            >
+              Pre-Order
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 ml-auto"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -105,36 +118,51 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    if (link.name === 'Home') {
+                      handleHomeClick(e);
+                    }
+                    setIsOpen(false);
+                  }}
                 >
                   {link.name}
                 </a>
               ))}
-              <div className="flex gap-4 pt-4 border-t border-border">
+              <div className="flex flex-col gap-3 pt-4 border-t border-border">
                 {user ? (
-                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2">
+                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="gap-2 justify-start">
                     <LogOut className="w-4 h-4" />
                     Sign Out
                   </Button>
                 ) : (
                   <Link to="/auth" onClick={() => setIsOpen(false)}>
-                    <Button variant="ghost" size="sm" className="gap-2">
+                    <Button variant="ghost" size="sm" className="gap-2 justify-start w-full">
                       <User className="w-4 h-4" />
                       Sign In
                     </Button>
                   </Link>
                 )}
                 <Link to="/cart" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" size="sm" className="gap-2 relative">
+                  <Button variant="ghost" size="sm" className="gap-2 relative justify-start w-full">
                     <ShoppingCart className="w-4 h-4" />
                     Cart
                     {itemCount > 0 && (
-                      <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
+                      <span className="ml-2 w-4 h-4 bg-foreground text-background text-xs rounded-full flex items-center justify-center">
                         {itemCount}
                       </span>
                     )}
                   </Button>
                 </Link>
+                <Button 
+                  size="sm" 
+                  className="bg-foreground text-background hover:bg-foreground/90 font-semibold"
+                  onClick={() => {
+                    setIsOpen(false);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                >
+                  Pre-Order
+                </Button>
               </div>
             </div>
           </motion.div>
