@@ -34,10 +34,10 @@ const Footer = () => {
   ];
 
   const policyLinks = [
-    { name: 'Terms of Service', url: '/terms' },
-    { name: 'Privacy Policy', url: '/privacy' },
-    { name: 'Return Policy', url: '/returns' },
-    { name: 'Terms & Conditions', url: '/conditions' },
+    { name: 'Terms of Service', url: '/terms-of-service' },
+    { name: 'Privacy Policy', url: '/privacy-policy' },
+    { name: 'Return Policy', url: '/return-policy' },
+    { name: 'Terms & Conditions', url: '/terms-and-conditions' },
   ];
 
   return (
