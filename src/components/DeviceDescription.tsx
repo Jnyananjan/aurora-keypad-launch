@@ -48,7 +48,7 @@ const DeviceDescription = () => {
           </div>
         </motion.div>
 
-        {/* Display Section */}
+        {/* Display Section - Image on top */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,13 +56,6 @@ const DeviceDescription = () => {
           transition={{ duration: 0.8 }}
           className="grid md:grid-cols-2 gap-8 items-center mb-20"
         >
-          <div className="space-y-4 md:order-1">
-            <h3 className="font-display text-2xl font-semibold">Integrated Display</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              A vibrant built-in LCD display shows real-time information, custom graphics, and dynamic feedback. 
-              Personalize your view with widgets, system stats, or custom artwork that reflects your workflow.
-            </p>
-          </div>
           <div className="relative md:order-2">
             <div className="border border-foreground/20 rounded-2xl overflow-hidden p-4">
               <img
@@ -71,6 +64,13 @@ const DeviceDescription = () => {
                 className="w-full object-contain mix-blend-lighten"
               />
             </div>
+          </div>
+          <div className="space-y-4 md:order-1">
+            <h3 className="font-display text-2xl font-semibold">Integrated Display</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              A vibrant built-in LCD display shows real-time information, custom graphics, and dynamic feedback. 
+              Personalize your view with widgets, system stats, or custom artwork that reflects your workflow.
+            </p>
           </div>
         </motion.div>
 

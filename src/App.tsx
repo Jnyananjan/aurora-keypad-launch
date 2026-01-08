@@ -12,6 +12,10 @@ import Checkout from "./pages/Checkout";
 import Setup from "./pages/Setup";
 import Updates from "./pages/Updates";
 import UpdateDetail from "./pages/UpdateDetail";
+import TermsOfService from "./pages/TermsOfService";
+import ReturnPolicy from "./pages/ReturnPolicy";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +36,10 @@ const App = () => (
               <Route path="/setup" element={<Setup />} />
               <Route path="/updates" element={<Updates />} />
               <Route path="/updates/:id" element={<UpdateDetail />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/return-policy" element={<ReturnPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { Download, Settings, Keyboard, CheckCircle } from 'lucide-react';
+import { Download, Settings, Keyboard, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { Button } from '@/components/ui/button';
 
 const steps = [
   {
@@ -33,6 +35,14 @@ const Setup = () => {
       
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Back Button */}
+          <Link to="/">
+            <Button variant="ghost" size="sm" className="gap-2 mb-8 text-muted-foreground hover:text-foreground">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
+            </Button>
+          </Link>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
