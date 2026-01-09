@@ -9,7 +9,12 @@ const steps = [
   {
     icon: Download,
     title: 'Download the Software',
-    description: 'Get the MacroPad Configurator from our official website. Available for Windows, macOS, and Linux.',
+    description: 'Get the MacroPad Configurator from our official website.',
+    links: [
+      { name: 'Windows', url: '#' },
+      { name: 'macOS', url: '#' },
+      { name: 'Linux', url: '#' },
+    ]
   },
   {
     icon: Settings,
@@ -87,6 +92,19 @@ const Setup = () => {
                   <p className="text-muted-foreground">
                     {step.description}
                   </p>
+                  {'links' in step && step.links && (
+                    <div className="flex gap-4 mt-3">
+                      {step.links.map((link) => (
+                        <a
+                          key={link.name}
+                          href={link.url}
+                          className="text-blue-500 hover:text-blue-400 font-semibold underline underline-offset-2 transition-colors"
+                        >
+                          {link.name}
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
